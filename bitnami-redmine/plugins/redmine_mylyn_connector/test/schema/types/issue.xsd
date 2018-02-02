@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://redmin-mylyncon.sf.net/api"
+	targetNamespace="http://redmin-mylyncon.sf.net/api"
+	elementFormDefault="qualified" >
+
+	<xsd:include schemaLocation="customValues.xsd" />
+	<xsd:include schemaLocation="journals.xsd" />
+	<xsd:include schemaLocation="attachments.xsd" />
+	<xsd:include schemaLocation="issueRelations.xsd" />
+	<xsd:include schemaLocation="timeEntries.xsd" />
+	<xsd:include schemaLocation="datetime.xsd" />
+ 	<xsd:include schemaLocation="idList.xsd" />
+	
+	<xsd:complexType name="issuePartial">
+		<xsd:sequence>
+			
+			<xsd:element name="subject" >
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:minLength value="1" />
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="updatedOn" type="tns:datetime" />
+			<xsd:element name="projectId" type="xsd:integer" />
+			<xsd:element name="statusId" type="xsd:integer" />
+ 			<xsd:element name="priorityId" type="xsd:integer" />
+			
+		</xsd:sequence>
+		<xsd:attribute name="id" type="xsd:integer" use="required" />
+		<xsd:attribute name="editAllowed" type="xsd:boolean" use="required" />
+	</xsd:complexType>
+ 	
+	<xsd:complexType name="issue">
+		<xsd:sequence>
+
+			<!-- REQUIRED -->
+			<xsd:element name="subject" >
+				<xsd:simpleType>
+					<xsd:restriction base="xsd:string">
+						<xsd:minLength value="1" />
+					</xsd:restriction>
+				</xsd:simpleType>
+			</xsd:element>
+			<xsd:element name="description" type="xsd:string" />
+			<xsd:element name="createdOn" type="tns:datetime" />
+			<xsd:element name="updatedOn" type="tns:datetime" />
+
+			<xsd:element name="trackerId" type="xsd:integer" />
+			<xsd:element name="projectId" type="xsd:integer" />
+			<xsd:element name="statusId" type="xsd:integer" />
+ 			<xsd:element name="priorityId" type="xsd:integer" />
+			<xsd:element name="watched" type="xsd:boolean"/><!-- watched by current user-->
+			<xsd:element name="watchers">
+				<xsd:complexType>
+					<xsd:simpleContent >
+						<xsd:extension base="tns:idList" >
+							<xsd:attribute name="viewAllowed" type="xsd:boolean" use="required"/>
+							<xsd:attribute name="addAllowed" type="xsd:boolean" use="required"/>
+							<xsd:attribute name="deleteAllowed" type="xsd:boolean" use="required"/>
+						</xsd:extension>
+					</xsd:simpleContent>
+					
+				</xsd:complexType>
+			</xsd:element>
+
+
+			<!-- OPTIONAL -->
+			<xsd:element name="startDate" type="xsd:date" minOccurs="0" />
+			<xsd:element name="dueDate" type="xsd:date" minOccurs="0" />
+			<xsd:element name="doneRatio" type="xsd:integer"  minOccurs="0"/>
+			<xsd:element name="estimatedHours" type="xsd:float" minOccurs="0" />
+
+			<xsd:element name="authorId" type="xsd:integer" minOccurs="0"/><!-- missing, when anonymous -->
+			<xsd:element name="categoryId" type="xsd:integer" minOccurs="0"/>
+			<xsd:element name="assignedToId" type="xsd:integer" minOccurs="0" />
+			<xsd:element name="fixedVersionId" type="xsd:integer" minOccurs="0"/>
+			<xsd:element name="parentId" type="xsd:integer" minOccurs="0"/>
+			<xsd:element name="subtasks" type="tns:idList" minOccurs="0"/>
+
+			<!-- AVAILABLE VALUES -->
+			<xsd:element name="availableStatus"  type="tns:idList"/>
+
+			<!-- EMBEDED -->
+			<xsd:element name="customValues" type="tns:customValues" />
+			<xsd:element name="journals" type="tns:journals" />
+			<xsd:element name="attachments" type="tns:attachments" />
+			<xsd:element name="issueRelations" type="tns:issueRelations" />
+			<xsd:element name="timeEntries" type="tns:timeEntries" />
+			
+		</xsd:sequence>
+		<xsd:attribute name="id" type="xsd:integer" use="required" />
+		<xsd:attribute name="editAllowed" type="xsd:boolean" use="required" />
+	</xsd:complexType>
+
+</xsd:schema>

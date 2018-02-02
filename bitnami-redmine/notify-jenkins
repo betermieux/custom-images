@@ -1,0 +1,13 @@
+#!/bin/sh
+
+JENKINS_URL=http://kube.informatik.hs-furtwangen.de/jenkins/git/notifyCommit\?url=
+GIT_HTTPS_URL=https://kube.informatik.hs-furtwangen.de/redmine/
+GIT_GIT_URL=git://kube.informatik.hs-furtwangen.de/
+GIT_SSH_URL=ssh://git@kube.informatik.hs-furtwangen.de/
+PROJECT_NAME=$(git config redminegitolite.projectid || echo '')
+
+echo  "Notifying Jenkins about change in $PROJECT_NAME..."
+curl -s $JENKINS_URL$GIT_HTTPS_URL$PROJECT_NAME.git > /dev/null
+curl -s $JENKINS_URL$GIT_GIT_URL$PROJECT_NAME.git > /dev/null
+curl -s $JENKINS_URL$GIT_SSH_URL$PROJECT_NAME.git > /dev/null
+echo "done."

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://redmin-mylyncon.sf.net/api"
+	targetNamespace="http://redmin-mylyncon.sf.net/api"
+	elementFormDefault="qualified" >
+
+	<xsd:include schemaLocation="property.xsd" />
+	<xsd:include schemaLocation="versionstring.xsd" />
+	<xsd:include schemaLocation="idList.xsd" />
+	<xsd:include schemaLocation="timeEntryActivity.xsd" />
+
+
+	<xsd:complexType name="project">
+		<xsd:complexContent>
+			<xsd:extension base="tns:property">
+				<xsd:sequence>
+					<xsd:element name="identifier" type="xsd:string" />
+					<xsd:element name="trackers" type="tns:idList"/>
+					<xsd:element name="versions" type="tns:idList"/>
+					
+					<xsd:element name="members">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="member"  minOccurs="0" maxOccurs="unbounded">
+									<xsd:complexType>
+										<xsd:attribute name="userId" type="xsd:integer"  use="required"/>
+										<xsd:attribute name="assignable" type="xsd:boolean"  use="optional"/>
+									</xsd:complexType>
+								</xsd:element>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+					
+					<xsd:element name="issueCategories" type="tns:idList"/>
+
+					<xsd:element name="issueCustomFields">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="issueCustomFieldsByTracker" minOccurs="0" maxOccurs="unbounded">
+									<xsd:complexType>
+										<xsd:simpleContent>
+											<xsd:extension base="tns:idList">
+												<xsd:attribute name="trackerId" type="xsd:integer" />
+											</xsd:extension>
+										</xsd:simpleContent>
+									</xsd:complexType>
+								</xsd:element>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+
+					<xsd:element name="timeEntryActivities" type="tns:timeEntryActivities" />
+					
+				</xsd:sequence>
+				<xsd:attribute name="newIssueAllowed" type="xsd:boolean" use="required"/>
+				<xsd:attribute name="moveIssueAllowed" type="xsd:boolean" use="required"/>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+</xsd:schema>

@@ -1,0 +1,14 @@
+<settings>
+  <mirrors>
+    <mirror>
+      <id>hfu-central</id>
+      <url>https://kube.informatik.hs-furtwangen.de/nexus/repository/central</url>
+      <mirrorOf>central,maven-repo,repo1</mirrorOf>
+    </mirror>
+    <mirror>
+      <id>hfu-java.net</id>
+      <url>https://kube.informatik.hs-furtwangen.de/nexus/repository/java.net</url>
+      <mirrorOf>java.net</mirrorOf>
+    </mirror>
+  </mirrors>
+</settings>
